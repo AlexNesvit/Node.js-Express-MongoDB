@@ -10,6 +10,13 @@ class UserService {
     create(data){
         const user = new User(data);
         return user.save();
-    }}
+    }
+    update(id, data){
+        return User.findByIdAndUpdate(id, data, {new: true});
+    }
+    delete(id){
+        return User.findByIdAndDelete(id);
+    }
+}
 
 module.exports = new UserService();

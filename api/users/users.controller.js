@@ -29,6 +29,26 @@ class UsersController {
             next(err);
         }
     }
+    async update(req, res, next) {
+        try{
+            const id = req.params.id;
+            const data = req.body;
+            const userModified = await usersService.update(id, data);
+            userModified.password = undefined;
+            res.json(userModified);
+        } catch (err) {
+            next(err);
+        }
+    }
+    async delete(req, res, next) {
+        try{
+            const id = req.params.id;
+            const user = await usersService.delete(id);
+            res.json(user);
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = new UsersController();
