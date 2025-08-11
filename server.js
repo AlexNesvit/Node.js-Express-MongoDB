@@ -1,6 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const NotFoundError = require('./errors/not-found');
 const app = express();
+
+app.use(cors());
 
 app.use((req, res, next) => {
     next(new NotFoundError());
