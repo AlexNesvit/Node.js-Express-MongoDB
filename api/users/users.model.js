@@ -1,12 +1,15 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 const { isEmail } = require('validator');
 
-const userSchema = Schema({
-    name: String,
+const userSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, "Name is required"],
+    },
     password: {
         type: String,
         required: [true, 'Password is required'],
-        minlinght: 8,
+        minlength: [8, "Password must be at least 8 characters long"],
     },
     email: {
         type: String,
@@ -31,4 +34,4 @@ const userSchema = Schema({
     },
 });
 
-module.exports = model('User', userSchema);
+module.exports = model("User", userSchema);

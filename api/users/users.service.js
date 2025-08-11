@@ -1,12 +1,15 @@
 const User = require('./users.model');
 
-class UserServise {
+class UserService {
     getAll() {
-        return User.find();
+        return User.find({}, "-password");
     }
     get(id) {
         return User.findById(id);
     }
-}
+    create(data){
+        const user = new User(data);
+        return user.save();
+    }}
 
-module.exports = new UserServise();
+module.exports = new UserService();

@@ -1,9 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const NotFoundError = require('./errors/not-found');
+const userRouter = require('./api/users/users.router');
 const app = express();
 
 app.use(cors());
+app.use(express.json());
+
+app.use("/api/users", userRouter);
 
 app.use((req, res, next) => {
     next(new NotFoundError());
