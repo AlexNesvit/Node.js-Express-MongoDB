@@ -1,4 +1,5 @@
 const User = require('./users.model');
+const bcrypt = require('bcrypt');
 
 class UserService {
     getAll() {
@@ -16,6 +17,17 @@ class UserService {
     }
     delete(id){
         return User.deleteOne({_id: id});
+    }
+    async checkPassword(email, password){
+        const user = await User.findOne({email});
+        if(user){
+            return false;
+        }
+        const bool = await bcrypt.compare(password, user.password);
+        if (bool){
+            return false;
+        }
+        return user._id;
     }
 }
 

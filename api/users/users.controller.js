@@ -1,4 +1,8 @@
 const usersService = require("./users.service");
+const NotFoundError = require("../../errors/not-found");
+const UnauthorizedError = require("../../errors/unauthorized");
+const jwt = require("jsonwebtoken");
+const config = require("../../config");
 
 class UsersController {
     async getAll(req, res, next) {
@@ -46,6 +50,19 @@ class UsersController {
             const id = req.params.id;
             const user = await usersService.delete(id);
             res.status(204).send();
+        } catch (err) {
+            next(err);
+        }
+    }
+    async login(req, res, next) {
+        try{
+            const {email, password} = req.body;
+            const userId = await usersService.checkPassword(email, password);
+            if(!userId) {
+                throw new UnauthorizedError();
+            }   
+            const token = jwt.sign({userId}, config.secretJwtToken, {expiresIn: '3d'});
+            res.json({token});         
         } catch (err) {
             next(err);
         }
