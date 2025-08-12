@@ -16,6 +16,7 @@ class UsersController {
             if(!user) {
                 throw new NotFoundError();
             }
+            res.json(user);
         } catch (err) {
             next(err);
         }
@@ -44,7 +45,7 @@ class UsersController {
         try{
             const id = req.params.id;
             const user = await usersService.delete(id);
-            res.json(user);
+            res.status(204).send();
         } catch (err) {
             next(err);
         }

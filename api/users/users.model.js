@@ -32,6 +32,15 @@ const userSchema = new Schema({
             message: "{VALUE} inconue",
         },
     },
+    age: Number,
+});
+
+userSchema.post('save', (next) => {
+    if (!this.eeil) {
+    const error = new Error('mon message');    
+    next(error);
+    }
+    next();
 });
 
 module.exports = model("User", userSchema);

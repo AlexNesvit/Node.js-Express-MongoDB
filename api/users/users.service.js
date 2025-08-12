@@ -5,7 +5,7 @@ class UserService {
         return User.find({}, "-password");
     }
     get(id) {
-        return User.findById(id);
+        return User.findById(id, "-password");
     }
     create(data){
         const user = new User(data);
@@ -15,7 +15,7 @@ class UserService {
         return User.findByIdAndUpdate(id, data, {new: true});
     }
     delete(id){
-        return User.findByIdAndDelete(id);
+        return User.deleteOne({_id: id});
     }
 }
 
