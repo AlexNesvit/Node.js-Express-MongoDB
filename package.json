@@ -6,7 +6,8 @@
     "test": "tests"
   },
   "scripts": {
-    "serve": "nodemon www/app.js"
+    "serve": "nodemon www/app.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "validator": "^13.15.15"
   },
   "devDependencies": {
+    "jest": "^30.0.5",
     "nodemon": "^3.1.10"
   }
 }
