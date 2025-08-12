@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { isEmail } = require('validator');
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
     name: {
@@ -35,12 +36,12 @@ const userSchema = new Schema({
     age: Number,
 });
 
-userSchema.post('save', (next) => {
-    if (!this.eeil) {
-    const error = new Error('mon message');    
-    next(error);
-    }
-    next();
+userSchema.pre("save", async function() {
+    this.email = this.email.toLowerCase();
+});
+
+userSchema.pre('save', async function() {
+    this.password = await bcrypt.hash(this.password, 10);
 });
 
 module.exports = model("User", userSchema);
